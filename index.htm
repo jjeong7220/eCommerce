@@ -1,0 +1,113 @@
+<!doctype HTML>
+<html>
+        <head>
+            <title> Title </title>
+        <style>
+            img{
+                width: 150px;
+				height: 150px;
+            }
+            input{
+                width: 50px;
+            }
+            h1{
+                text-align: center;
+            }
+            body{
+                background-color: gainsboro;
+            }
+            div{
+                width: 328px;
+            }
+            #wrapper {
+            width: 750px;
+            margin: 0 auto;
+            }   
+    </style>
+    <script>
+    var pr1 = 7, Wpr1 = 4;
+    var pr2 = 9, Wpr2 = 6;
+    var pr3 = 15, Wpr3 = 10;
+    var taxRate = 8.75;
+    function initPrices(){
+        document.getElementById("span1").innerHTML = "Price: $" + pr1;
+        document.getElementById("span2").innerHTML = "Price: $" + pr2;
+        document.getElementById("span3").innerHTML = "Price: $" + pr3;
+    } 
+    function ProcessOrder(){
+        var q1 = parseInt(document.getElementById("qty1").value);
+        var q2 = parseInt(document.getElementById("qty2").value);
+        var q3 = parseInt(document.getElementById("qty3").value);
+        var customerSubtotal = (pr1 * q1) + (pr2 * q2) + (pr3 * q3);
+        var companySubtotal = (Wpr1 * q1) + (Wpr3 * q3) + (Wpr3 * q3);
+        var profit = (customerSubtotal - companySubtotal);
+        var tax = customerSubtotal * taxRate/100;
+        var shipping = 0;
+        if (customerSubtotal < 100){
+            shipping = 25;
+        }else if (customerSubtotal >= 100 && customerSubtotal <=200){
+            shipping = 10;
+        }else shipping = 0;
+
+        var customerTotal = (customerSubtotal + tax + shipping);
+        var itemsSold = (q1 + q2 + q3);
+        op = document.getElementById("output");
+        var build = " ";
+
+        build += "<div>"
+        build += "<pre>"
+        build += "              //CUSTOMER INFO\\\\" + "<br>";
+        build += "============================================= <br>";
+        build += "Subtotal:                 $" + customerSubtotal + "<br>";
+        build += "<br>"
+        build += "Tax:                      $" + tax.toFixed(2);
+        build += "<br>"
+        build += "Shipping:                 $" + shipping;
+        build += "<br>"
+        build += "Total:                    $" + customerTotal.toFixed(2);
+
+        build += "<br><br>"
+        build += "<pre>"
+        build += "<div>"
+        build += "               //COMPANY INFO\\\\" + "<br>";
+        build += "============================================== <br>";
+        build += "Customer subtotal:        $" + customerSubtotal;
+        build += "<br>"
+        build += "Company subtotal:         $" + companySubtotal;
+        build += "<br>"
+        build += "Company profit:           $" + profit.toFixed(2);
+        build += "<br>"
+        build += "Total items sold:         " + itemsSold;
+        build += "</div>";
+
+        op.innerHTML = build;
+    }
+    </script>
+    </head>
+    <body onload="initPrices()">   
+        <div id="wrapper">
+            <h1>Rubber and rubber accessories</h1>
+                <div style="float: left; width: 33%;">
+                    <img src="rubber1.jpg" width="150" height="150"><br>
+                    <p>At least 5 rubber bands</p>
+                    <span id="span1"></span>
+                    QTY:<input type="text" id="qty1" placeholder="#" value="0">
+                </div>
+                <div style="float: left; width: 33%;">
+                    <img src="rubber2.jpg" width="150" height="150"><br>
+                    <p>x20 the rubber</p>
+                    <span id="span2"></span>
+                    QTY:<input type="text" id="qty2" placeholder="#" value="0">
+                </div>
+                <div style="float: left; width: 33%;">
+                    <img src="rubber3.jpg" width="150" height="150"><br>
+                    <p>A whole ball</p>
+                    <span id="span3"></span>
+                    QTY:<input type="text" id="qty3" placeholder="#" value="0">
+                </div>
+        </div>
+		<p><button onclick="ProcessOrder()">Process order</button></p>
+            <br>
+            <div id="output"></div>
+    </body>
+</html>
